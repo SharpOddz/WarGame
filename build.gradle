@@ -1,0 +1,34 @@
+plugins {
+    id 'application'
+}
+
+group = 'com.example.wargame'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def platform = org.gradle.internal.os.OperatingSystem.current()
+    def classifier = platform.isWindows() ? 'win' : platform.isMacOsX() ? 'mac' : 'linux'
+    implementation "org.openjfx:javafx-controls:21.0.2:${classifier}"
+    implementation "org.openjfx:javafx-graphics:21.0.2:${classifier}"
+    implementation "org.openjfx:javafx-base:21.0.2:${classifier}"
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.0'
+}
+
+application {
+    mainClass = 'app.MainApp'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
